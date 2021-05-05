@@ -5,10 +5,12 @@ import java.util.Scanner;
 public class Engine {
     private Dungeon dungeon;
     private Player player;
+    private Scanner scanner;
 
     public Engine() {
         dungeon = new Dungeon();
         player = new Player();
+        scanner = new Scanner(System.in);
     }
 
     // Initialise the dungeon and the player position
@@ -65,6 +67,43 @@ public class Engine {
         return false;
     }
 
+    private boolean combat(Monster monster) {
+        String combatChoice;
+
+        System.out.println("W-what are you doing step-monster!? Kayaaaaa~");
+
+        while(monster.alive && player.alive) {
+            System.out.println("Enemy: " + monster.hp + "/" + monster.hpMax);
+            System.out.println("You: " + player.hp + "/" + player.hpMax);
+            System.out.println("Do you want to (A)ttack or try to (F)lee?");
+
+            combatChoice = scanner.nextLine();
+            if("a".equals(combatChoice.toLowerCase())) {
+                monster.takeDamage(player.damage);
+                System.out.println("You attack the monster for " + player.damage + " damage!");
+                player.takeDamage(monster.damage);
+                System.out.println("The monster attacks you  for " + monster.damage + " damage!");
+
+            }
+
+            else if ("f".equals(combatChoice.toLowerCase())) {
+
+            }
+
+            else {
+                System.out.println("Please choose either (A)ttack or (F)leeing.");
+            }
+
+        }
+
+        // Even if the monster is also dead, if the player's dead it's over
+        if (!player.alive)
+            return false;
+
+        System.out.println("You killed the monster! Wow much strong, such muscles, did not expect");
+        return true;
+    }
+
     public void run() {
         init();
         introText();
@@ -86,8 +125,12 @@ public class Engine {
                     return;
                 }
 
-                else if (dungeon.getRoom(player.coordinates).hasActiveTrap()) {
+                if (dungeon.getRoom(player.coordinates).hasActiveTrap()) {
                     player.takeDamage(dungeon.getRoom(player.coordinates).trap.damagePlayer());
+                }
+
+                if (dungeon.getRoom(player.coordinates).hasAliveMonster()) {
+                    combat(dungeon.getRoom(player.coordinates).monster);
                 }
 
                 System.out.println(player);

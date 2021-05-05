@@ -8,6 +8,7 @@ public class Room {
     public boolean isLast;
 
     public Trap trap;
+    public Monster monster;
     private HashMap<String, Room> adjacentRooms;
 
 
@@ -18,16 +19,24 @@ public class Room {
         isLast = false;
 
         trap = null;
-
         Random r = new Random();
         if(r.nextInt(10) > 8) {
             trap = new Trap(r.nextInt(2) + 1);
+        }
+
+        monster = null;
+        if(r.nextInt(20) > 15) {
+            monster = new Monster();
         }
     }
 
     // Check if the room has a trap, and if the trap is active or not
     public boolean hasActiveTrap() {
         return (trap != null && trap.isActive);
+    }
+
+    public boolean hasAliveMonster() {
+        return (monster != null && monster.alive);
     }
 
     public void setRoomInDirection(String dir, Room r) {

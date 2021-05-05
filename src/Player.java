@@ -1,33 +1,16 @@
-public class Player {
-
+public class Player extends LivingEntity {
     public Point coordinates;
-    private int hp, hpMax;
-    public boolean alive;
 
     public Player() {
         coordinates = new Point();
         hpMax = 10;
         hp = hpMax;
+        damage = 2;
         alive = true;
     }
 
     public void setCoordinates(Point p) {
         coordinates = p;
-    }
-
-    public void takeDamage(int damage) {
-        hp -= damage;
-
-        if (hp <= 0)
-            alive = false;
-    }
-
-    // We could use takeDamage() with negative damage
-    public void heal(int heal) {
-        hp += heal;
-
-        if (hp > hpMax)
-            hp = hpMax;
     }
 
     public void move(String dir) {
