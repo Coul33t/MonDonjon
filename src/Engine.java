@@ -18,7 +18,7 @@ public class Engine {
     }
 
     // Writes the intro of the game
-    public void intro() {
+    public void introText() {
         System.out.println("---------------------------------------------------------");
         System.out.println("Slt sava?");
         System.out.println("B1venu ds le donjon hinhinhin");
@@ -26,6 +26,12 @@ public class Engine {
         System.out.println("Okayyyyyy let's goooooooo...(t'es mature pour ton âge :3)");
         System.out.println("---------------------------------------------------------");
         System.out.println("\n\n\n");
+    }
+
+    public void endText() {
+        System.out.println("Merci d'avoir joué à Dungeon Walking Simulator.");
+        System.out.println("...");
+        System.out.println("Aller casse-toi maintenant ptn j'suis pas ta mère");
     }
 
     // Format the direction chosen by the player
@@ -61,7 +67,7 @@ public class Engine {
 
     public void run() {
         init();
-        intro();
+        introText();
         boolean playing = true;
 
         Scanner scanner = new Scanner(System.in);
@@ -76,9 +82,18 @@ public class Engine {
             if(playerChoice != null && checkPlayerChoice(playerChoice)) {
                 player.move(playerChoice);
                 if (dungeon.getRoom(player.coordinates).isLast) {
-                    System.out.println("Merci d'avoir joué à Dungeon Walking Simulator.");
-                    System.out.println("...");
-                    System.out.println("Aller casse-toi maintenant ptn j'suis pas ta mère");
+                    endText();
+                    return;
+                }
+
+                else if (dungeon.getRoom(player.coordinates).hasActiveTrap()) {
+                    player.takeDamage(dungeon.getRoom(player.coordinates).trap.damagePlayer());
+                }
+
+                System.out.println(player);
+
+                if (!player.alive) {
+                    System.out.println("T mor hinhinhin");
                     return;
                 }
             }

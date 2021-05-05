@@ -1,16 +1,33 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Room {
-    private HashMap<String, Room> adjacentRooms;
     public boolean isFirst;
     public boolean isLast;
+
+    public Trap trap;
+    private HashMap<String, Room> adjacentRooms;
+
+
 
     public Room() {
         adjacentRooms = new HashMap<String, Room>();
         isFirst = false;
         isLast = false;
+
+        trap = null;
+
+        Random r = new Random();
+        if(r.nextInt(10) > 8) {
+            trap = new Trap(r.nextInt(2) + 1);
+        }
+    }
+
+    // Check if the room has a trap, and if the trap is active or not
+    public boolean hasActiveTrap() {
+        return (trap != null && trap.isActive);
     }
 
     public void setRoomInDirection(String dir, Room r) {
