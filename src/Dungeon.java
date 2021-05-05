@@ -1,8 +1,11 @@
 public class Dungeon {
+    private final int DUNGEON_X_SIZE = 4;
+    private final int DUNGEON_Y_SIZE = 3;
+
     private Room[][] dungeonMap;
 
     public Dungeon() {
-        dungeonMap = new Room[3][4];
+        dungeonMap = new Room[DUNGEON_Y_SIZE][DUNGEON_X_SIZE];
     }
 
     public Room[][] getMap() {

@@ -4,6 +4,9 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Room {
+
+    private final int TRAP_SPAWN_THRESHOLD = 18;
+    private final int MONSTER_SPAWN_THRESHOLD = 10;
     public boolean isFirst;
     public boolean isLast;
 
@@ -20,12 +23,12 @@ public class Room {
 
         trap = null;
         Random r = new Random();
-        if(r.nextInt(10) > 8) {
+        if(r.nextInt(20) > TRAP_SPAWN_THRESHOLD) {
             trap = new Trap(r.nextInt(2) + 1);
         }
 
         monster = null;
-        if(r.nextInt(20) > 15) {
+        if(r.nextInt(20) > MONSTER_SPAWN_THRESHOLD) {
             monster = new Monster();
         }
     }
