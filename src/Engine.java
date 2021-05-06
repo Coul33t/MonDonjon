@@ -87,7 +87,9 @@ public class Engine {
             }
 
             else if ("f".equals(combatChoice.toLowerCase())) {
-
+                System.out.println("Ни шагу назад, това́рищ!");
+                player.takeDamage(monster.damage);
+                System.out.println("The monster attacks you  for " + monster.damage + " damage!");
             }
 
             else {
